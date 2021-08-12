@@ -13,12 +13,12 @@ func main() {
 	InitDB()
 	engine := handlebars.New("./views", ".hbs")
 	app := fiber.New(fiber.Config{
-		Views: engine,
+		Views: engine.Reload(true),
 	})
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Render("index", fiber.Map{
-			"Title": "Bon",
+			"title": "Home",
 		})
 	})
 
