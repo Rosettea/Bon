@@ -10,8 +10,8 @@ import (
 )
 
 func main() {
+	InitDB()
 	engine := handlebars.New("./views", ".hbs")
-
 	app := fiber.New(fiber.Config{
 		Views: engine,
 	})
@@ -29,10 +29,18 @@ func main() {
 		idRaw := make([]byte, 2)
 		rand.Read(idRaw)
 
-		urlid := hex.EncodeToString(idRaw)
-		shortlink := c.BaseURL() + "/" + urlid
+		sid := hex.EncodeToString(idRaw)
+		slink := c.BaseURL() + "/" + sid
 
-		return c.JSON(NewURL{shortlink, urlid})
+		AddLink(sid, url)
+		return c.JSON(NewURL{slink, sid})
+	})
+
+	app.Get("/:id", func(c *fiber.Ctx) error {
+		sid := c.Params("id")
+		target := GetLink(sid)
+
+		return c.Redirect(target)
 	})
 
 	app.Listen(":3000")
