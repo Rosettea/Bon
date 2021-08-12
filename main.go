@@ -22,7 +22,7 @@ func main() {
 		})
 	})
 
-	app.Get("/api/new", func(c *fiber.Ctx) error {
+	app.Post("/api/new", func(c *fiber.Ctx) error {
 		url := c.Query("url")
 		fmt.Println(url)
 
