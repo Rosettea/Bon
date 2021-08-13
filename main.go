@@ -9,6 +9,10 @@ import (
 	"github.com/gofiber/template/handlebars"
 )
 
+type BonUrl struct {
+	Url string `json:"url" xml:"url" form:"url"`
+}
+
 func main() {
 	InitDB()
 	engine := handlebars.New("./views", ".hbs")
@@ -23,16 +27,19 @@ func main() {
 	})
 
 	app.Post("/api/new", func(c *fiber.Ctx) error {
-		url := c.Query("url")
-		fmt.Println(url)
+		b := new(BonUrl)
 
+		if err := c.BodyParser(b); err != nil {
+			fmt.Println(err)
+			return c.SendStatus(500)
+		}
 		idRaw := make([]byte, 2)
 		rand.Read(idRaw)
 
 		sid := hex.EncodeToString(idRaw)
 		slink := c.BaseURL() + "/" + sid
 
-		AddLink(sid, url)
+		AddLink(sid, b.Url)
 		return c.JSON(NewURL{slink, sid})
 	})
 
