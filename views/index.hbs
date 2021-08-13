@@ -1,9 +1,38 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>{{Title}}</title>
-    </head>
-    <body>
-        <p>hi</p>
-    </body>
+	<head>
+		{{> 'partials/head' }}
+	</head>
+	<body>
+	<script>
+		function showURL(shorened) {
+			const target = document.getElementById('linkbox').value
+			const xhr = new XMLHttpRequest();
+
+			xhr.open("POST", "/api/new", true);
+			xhr.setRequestHeader('Content-Type', 'application/json');
+			xhr.send(JSON.stringify({
+				url: target
+			}));
+
+			xhr.onload = function() {
+				const sid = JSON.parse(this.responseText).id
+				document.getElementById('linkbox').setAttribute('readonly', '');
+				document.getElementById('linkbox').value = window.location.href + sid
+			}
+		}
+	</script>
+	<section class="section">
+		<div class="container">
+			<h1 class="title">Bon {{version}}</h1>
+			<p class="subtitle">🍮 A small URL shortener</p>
+			<nav class="level">
+				<input name="url" id="linkbox" class="input mr-4 is-rounded is-medium" type="text" placeholder="Enter URL..">
+				<button class="button is-primary is-rounded is-medium" onclick="showURL()">Shorten!</button>
+			</nav>
+		</div>
+	</section>
+
+	{{> 'partials/footer' }}
+	</body>
 </html>
