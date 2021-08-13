@@ -1,5 +1,5 @@
 # Bon
-> 🍮 A small, simple URL shortener.
+> 🍮  A small, simple URL shortener.
 
 Bon is a very tiny and simple self hosted URL shortener written in Go.  
 ![](https://modeus.is-inside.me/geC6rUKI.png)
