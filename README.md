@@ -17,6 +17,19 @@ cd Bon
 go build
 ```
 
+## Using Docker
+
+Build:
+```
+git clone https://github.com/Rosettea/Bon
+cd Bon
+docker build -t bon:latest .
+```
+Run:
+```
+docker run -it -p 3000:3000 bon:latest
+```
+
 # Usage
 Run the `Bon` executable, then it'll be running at port 3000.
 
